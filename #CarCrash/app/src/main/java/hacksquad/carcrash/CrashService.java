@@ -47,6 +47,7 @@ public class CrashService extends Service {
 
     @Override
     public void onCreate() {
+
         countDownTimer = new CountDownTimer(10000, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -68,6 +69,8 @@ public class CrashService extends Service {
             if (LastTimestampInteractions.loadLastTimestamp(file) == null) {
                 LastTimestampInteractions.setLastTimestamp("Loooolz", openFileOutput("data.txt", Context.MODE_PRIVATE));
             }
+            newLastTimestamp = LastTimestampInteractions.loadLastTimestamp(file);
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -114,7 +117,7 @@ public class CrashService extends Service {
 
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
-                builder.setMessage("Crash detected: Police will messaged in 30 seconds unless app is turned off");
+                builder.setMessage("Crash detected: Police will be notified in 30 seconds unless app is turned off");
 
                 ad = builder.create();
                 ad.show();
