@@ -114,39 +114,11 @@ void loop() {
   Serial.print(", Z: ");
   Serial.println(zDiff);
 
-  if(abs(xDiff) >= LIMIT || abs(yDiff) >= LIMIT){
+  if(xDiff >= LIMIT || yDiff >= LIMIT){
     int response = m2xClient.updateStreamValue(deviceId, streamName, 1);
     Serial.print("M2x client response code: ");
     Serial.println(response);
   }
- 
-
-  
-
-  // Calculate pitch and roll. Find the maximum tilt angle.
-//  float pitch = atan(x / sqrt(y * y + z * z)) * 180;
-//  float roll = atan(y / sqrt(x * x + z * z)) * 180;
-//  float maxTilt = max(abs(roll), abs(pitch)) / 3.14159;
-//  Serial.print(" maxTilt: ");
-//  Serial.println(maxTilt);
-
-
-  // If the maximum tilt is over 20 degrees, then send
-  // data to stream
-//  if (maxTilt > 20) {
-//    int response = m2xClient.updateStreamValue(deviceId, streamName, maxTilt);
-//    Serial.print("M2x client response code: ");
-//    Serial.println(response);
-//
-//    // Flash red LED if post is successful
-//    if (response == 202) {
-//      digitalWrite(RED_LED, HIGH);   // Turn the LED on (HIGH is the voltage level)
-//      delay(500);                // wait for a half second
-//      digitalWrite(RED_LED, LOW);
-//    }
-//  }
-
-
 
 }
 
