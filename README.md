@@ -5,8 +5,12 @@ This is the repo for the Crash Alert System, designed to alert authorities and o
 
 Members:
 Seth Forrester
+
 Calum Black
+
 Amanda Liang
+
 Russell Slighton
+
 Christopher Bradsher
 
