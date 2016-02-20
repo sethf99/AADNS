@@ -15,3 +15,4 @@ Russell Slighton
 
 Christopher Bradsher
 
+/Users/Seth/Crash-Alert-System/Images/Logo.png
