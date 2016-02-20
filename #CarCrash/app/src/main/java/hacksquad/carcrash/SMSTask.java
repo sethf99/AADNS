@@ -19,7 +19,9 @@ public class SMSTask extends AsyncTask<Location, Void, Void> {
              lon= params[0].getLongitude();
         }
         else{
-            System.out.println("null");
+            lat = 22.2377285;
+            lon = 114.22280090000004;
+            System.out.println("Emulator had no last checked location - using demo coords");
         }
 
 
