@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     static CrashService crashService;
     boolean on = false;
+    static  RelativeLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+     layout = (RelativeLayout) findViewById(R.id.layo);
 
         final Button button2 = (Button) findViewById(R.id.button);
         button2.setOnClickListener(new View.OnClickListener() {

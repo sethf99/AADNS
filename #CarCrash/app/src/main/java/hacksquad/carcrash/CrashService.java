@@ -8,8 +8,10 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.app.TaskStackBuilder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.LocationManager;
 import android.os.AsyncTask;
@@ -49,13 +51,14 @@ public class CrashService extends Service {
     @Override
     public void onCreate() {
 
-        countDownTimer = new CountDownTimer(10000, 1000) {
+        countDownTimer = new CountDownTimer(10000, 1000) { //set at 10 seconds for demo.
 
             public void onTick(long millisUntilFinished) {
             }
 
             public void onFinish() {
                 sendMessage();
+                MainActivity.layout.setBackgroundColor(Color.WHITE);
             }
 
         };
@@ -97,7 +100,7 @@ public class CrashService extends Service {
         } else if(on) {
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                     .setContentTitle("Crash Detected")
-                    .setContentText("Turn off #CarCrash to cancel automatic messaging if this is a mistake.").setPriority(Notification.PRIORITY_MAX)
+                    .setContentText("Disable detection to cancel automatic messaging if this is a mistake.").setPriority(Notification.PRIORITY_MAX)
                     .setSmallIcon(android.R.drawable.ic_menu_close_clear_cancel	);
 
             Intent resultIntent = new Intent(this, MainActivity.class);
@@ -115,10 +118,15 @@ public class CrashService extends Service {
 
             mNotificationManager.notify(0, mBuilder.build());
 
-
+            MainActivity.layout.setBackgroundColor(Color.RED);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
-                builder.setMessage("Crash detected: Police will be notified in 30 seconds unless app is turned off");
+                builder.setMessage("Crash detected: Contacts with be notified in 10 seconds unless detection is disabled.").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ad.dismiss();
+                    }
+                });
 
                 ad = builder.create();
                 ad.show();

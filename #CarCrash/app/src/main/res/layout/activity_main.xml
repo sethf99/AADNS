@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="hacksquad.carcrash.MainActivity">
+    tools:context="hacksquad.carcrash.MainActivity"
+    android:id="@+id/layo">
 
     <Button
         android:layout_width="wrap_content"
@@ -29,7 +30,7 @@
         android:id="@+id/editText"
         android:layout_below="@+id/ON_OFF"
         android:layout_centerHorizontal="true"
-        android:text="Enter phone numbers separated by a space" />
+        android:hint="Enter each phone numbers you wish to SMS in the event of a crash, separated by a space. For example, you might want to message 999." />
 
     <Button
         style="?android:attr/buttonStyleSmall"

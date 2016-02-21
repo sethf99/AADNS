@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">AADNS</string>
-    <string name="TurnsOn">Turn On</string>
-    <string name="TurnsOff">Turn Off</string>
+    <string name="TurnsOn">Enable Detection</string>
+    <string name="TurnsOff">Disable Detection</string>
 </resources>
