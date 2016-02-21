@@ -2,6 +2,7 @@ package hacksquad.carcrash;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -54,13 +55,13 @@ public class CrashService extends Service {
             }
 
             public void onFinish() {
-                System.out.println("Finished");
                 sendMessage();
             }
 
         };
 
         file = new File(getFilesDir(), "data.txt");
+
 
         try {
             if (!file.exists()) {
@@ -96,8 +97,8 @@ public class CrashService extends Service {
         } else if(on) {
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                     .setContentTitle("Crash Detected")
-                    .setContentText("Turn off #CarCrash to cancel automatic messaging if this is a mistake.")
-                    .setSmallIcon(android.R.drawable.ic_menu_rotate);
+                    .setContentText("Turn off #CarCrash to cancel automatic messaging if this is a mistake.").setPriority(Notification.PRIORITY_MAX)
+                    .setSmallIcon(android.R.drawable.ic_menu_close_clear_cancel	);
 
             Intent resultIntent = new Intent(this, MainActivity.class);
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
@@ -137,7 +138,16 @@ public class CrashService extends Service {
                             != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
-            new SMSTask().execute(locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), false)));
+
+            SMSData data = new SMSData();
+            data.location = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), false));
+            try {
+                data.numbers = PersonInteraction.loadPeople(new File(getFilesDir(), "people.txt")).split(" ");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            new SMSTask().execute(data);
         }
     }
 
