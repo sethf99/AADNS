@@ -16,4 +16,4 @@ Russell Slighton
 
 Christopher Bradsher
 
-![alt tag](https://raw.githubusercontent.com/sethf99/AADNS/master/Images/Logo2.png)
+![alt tag](https://raw.githubusercontent.com/sethf99/AADNS/master/Images/Logo3.png)
