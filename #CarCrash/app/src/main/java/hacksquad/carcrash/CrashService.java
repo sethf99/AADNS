@@ -2,13 +2,16 @@ package hacksquad.carcrash;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.app.TaskStackBuilder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.LocationManager;
 import android.os.AsyncTask;
@@ -47,19 +50,21 @@ public class CrashService extends Service {
 
     @Override
     public void onCreate() {
-        countDownTimer = new CountDownTimer(10000, 1000) {
+
+        countDownTimer = new CountDownTimer(10000, 1000) { //set at 10 seconds for demo.
 
             public void onTick(long millisUntilFinished) {
             }
 
             public void onFinish() {
-                System.out.println("Finished");
                 sendMessage();
+                MainActivity.layout.setBackgroundColor(Color.WHITE);
             }
 
         };
 
         file = new File(getFilesDir(), "data.txt");
+
 
         try {
             if (!file.exists()) {
@@ -68,6 +73,8 @@ public class CrashService extends Service {
             if (LastTimestampInteractions.loadLastTimestamp(file) == null) {
                 LastTimestampInteractions.setLastTimestamp("Loooolz", openFileOutput("data.txt", Context.MODE_PRIVATE));
             }
+            newLastTimestamp = LastTimestampInteractions.loadLastTimestamp(file);
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -93,8 +100,8 @@ public class CrashService extends Service {
         } else if(on) {
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                     .setContentTitle("Crash Detected")
-                    .setContentText("Turn off #CarCrash to cancel automatic messaging if this is a mistake.")
-                    .setSmallIcon(android.R.drawable.ic_menu_rotate);
+                    .setContentText("Disable detection to cancel automatic messaging if this is a mistake.").setPriority(Notification.PRIORITY_MAX)
+                    .setSmallIcon(android.R.drawable.ic_menu_close_clear_cancel	);
 
             Intent resultIntent = new Intent(this, MainActivity.class);
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
@@ -111,10 +118,15 @@ public class CrashService extends Service {
 
             mNotificationManager.notify(0, mBuilder.build());
 
-
+            MainActivity.layout.setBackgroundColor(Color.RED);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
-                builder.setMessage("Crash detected: Police will messaged in 30 seconds unless app is turned off");
+                builder.setMessage("Crash detected: Contacts with be notified in 10 seconds unless detection is disabled.").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ad.dismiss();
+                    }
+                });
 
                 ad = builder.create();
                 ad.show();
@@ -134,7 +146,16 @@ public class CrashService extends Service {
                             != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
-            new SMSTask().execute(locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), false)));
+
+            SMSData data = new SMSData();
+            data.location = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), false));
+            try {
+                data.numbers = PersonInteraction.loadPeople(new File(getFilesDir(), "people.txt")).split(" ");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            new SMSTask().execute(data);
         }
     }
 

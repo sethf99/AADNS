@@ -1,0 +1,30 @@
+/*0 —
+
+Good morning, my name is Amanda Liang and today we are going to present and demo the AADNS.
+
+Every 14 seconds, a car crash occurs - of these 2.5 million crashes each year, 2.4 million result in injury. In Hong Kong, car crashes are reported by bystanders to the police however this is inefficient. When someone is critically injured by a car accident and no one is there. What can we do?
+
+We aim to save lives.
+
+20 —
+
+Our team has created and developed the Advanced Automotive Destruction Notification System which makes use of the TI CC3200 Launchpad.
+
+30 —
+
+By using accelerometer data to calculate when a crash has occurred, the AADNS will then push crash data to the IoT cloud. On the other end, a phone pulling data from the server, upon receiving the data from the AADNS, will send a text message to emergency contacts in addition to the local authorities, informing them of the crash and its location. 
+
+This product is scalable and marketable to both public and privates sectors and would be of great benefit in developing nations such as India, where car crashes occur every 6 seconds.
+
+50 — 
+But while this is indeed a very marketable solution, the bottom line is this.
+AADNS - we save lives.
+
+60-
+And now we will move onto our product demonstration.
+
+
+
+http://www.lawcore.com/car-accident/statistics.html
+
+http://www.zoll.com/uploadedFiles/Public_Site/Core_Technologies/See-Thru_CPR/CPR-Fakten.pdf*/
